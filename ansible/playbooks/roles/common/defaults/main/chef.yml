@@ -64,7 +64,6 @@ chef_roles:
       - recipe[bcpc::haproxy]
       - recipe[bcpc::etcd-member]
       - recipe[bcpc::calico-felix]
-      - recipe[bcpc::rabbitmq]
       - recipe[bcpc::memcached]
       - recipe[bcpc::unbound]
       - recipe[bcpc::consul]
@@ -83,6 +82,15 @@ chef_roles:
       - recipe[bcpc::os-quota]
       - recipe[bcpc::flavors]
       - recipe[bcpc::watcher]
+
+  - name: rmqnode
+    description: cloud infrastructure MQ services
+    json_class: Chef::Role
+    chef_type: role
+    run_list:
+      - role[node]
+      - recipe[bcpc::calico-felix]
+      - recipe[bcpc::rabbitmq]
 
   - name: node
     description: common role for all bcpc nodes
