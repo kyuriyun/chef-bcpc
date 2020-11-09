@@ -1,5 +1,6 @@
 # -*- mode: Makefile -*-
 # vim:list:listchars=tab\:>-:
+# Some arbitrary change
 
 export inventory = ansible/inventory.yml
 export playbooks = ansible/playbooks
@@ -85,10 +86,17 @@ configure-chef-nodes :
 		-t chef-node --limit cloud
 
 run-chef-client : \
+	run-chef-client-node-role \
 	run-chef-client-bootstraps \
 	run-chef-client-headnodes \
 	run-chef-client-worknodes \
 	run-chef-client-storagenodes
+
+run-chef-client-node-role :
+
+	ansible -v \
+		-i ${inventory} cloud \
+		-ba 'chef-client -o role[node]'
 
 run-chef-client-bootstraps :
 
